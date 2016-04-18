@@ -8,7 +8,7 @@ module Spree
       if user.experience
         if SpreeExperienceMarketplace::Engine.spree_digital_available?
           # can [:admin, :manage], Spree::Digital, variant: { experience_ids: user.experience_id }
-          can [:admin, :manage], Spree::Digital do |digital|
+          can [:admin, :create, :manage], Spree::Digital do |digital|
             digital.variant.experience_ids.include?(user.experience_id)
           end
           can :create, Spree::Digital
@@ -19,7 +19,7 @@ module Spree
         can :create, Spree::Image
         if SpreeExperienceMarketplace::Engine.spree_group_price_available?
           # can [:admin, :manage], Spree::GroupPrice, variant: { experience_ids: user.experience_id }
-          can [:admin, :manage], Spree::GroupPrice do |price|
+          can [:admin, :manage, :create,], Spree::GroupPrice do |price|
             price.variant.experience_ids.include?(user.experience_id)
           end
         end
@@ -52,7 +52,7 @@ module Spree
         # TODO: Want this to be inline like:
         # can [:admin, :manage], Spree::Variant, experience_ids: user.experience_id
         can [:admin, :create, :index], Spree::Variant
-				can [:admin, :manage], Spree::Variant do |variant|
+				can [:admin, :manage, :create,], Spree::Variant do |variant|
           variant.experience_ids.include?(user.experience_id)
         end
       end
